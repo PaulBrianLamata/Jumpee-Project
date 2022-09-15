@@ -191,16 +191,10 @@ public class UserServiceImpl implements UserService{
 		User u = userRepository.getUserByEmailObj(email);
 		String userTokenInDB = this.userToken(email);
 		String userToker = token;
-
-		
-		
-		
 		if(!userToker.equals(userTokenInDB)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Code");
 		}
 		else {
-			
-
 			String pattern= "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,16}$";
 			String matcher= user.getPassword();
 			boolean matchFound = matcher.matches(pattern);

@@ -84,8 +84,10 @@ public class User {
 	@JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
 	private List<AccountWallet> accountWallet;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
+	private List<OrderItem> orderItems;
 	
-
 	public String getResetToken() {
 		return resetToken;
 	}
@@ -173,6 +175,14 @@ public class User {
 
 	public void setAccountWallet(List<AccountWallet> accountWallet) {
 		this.accountWallet = accountWallet;
+	}
+
+	public List<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
 	// End of Getters and Setter

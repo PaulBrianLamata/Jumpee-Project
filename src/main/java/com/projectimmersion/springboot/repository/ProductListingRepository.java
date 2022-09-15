@@ -6,4 +6,5 @@ import com.projectimmersion.springboot.model.ProductListing;
 
 public interface ProductListingRepository extends JpaRepository<ProductListing, Long> {
 
+	ProductListing findByProductName(String productName);
 }

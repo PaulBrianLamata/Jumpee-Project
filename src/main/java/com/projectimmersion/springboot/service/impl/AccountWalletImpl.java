@@ -26,9 +26,6 @@ public class AccountWalletImpl implements AccountWalletService {
 		this.userRepository = userRepository;
 	}
 
-
-
-
 	@Override
 	public AccountWallet saveUserBalance(AccountWallet accountWallet) {
 		String userEmail = UserInfo.getEmail();

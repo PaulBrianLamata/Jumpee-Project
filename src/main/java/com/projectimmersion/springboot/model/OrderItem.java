@@ -5,18 +5,20 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.projectimmersion.springboot.view.View;
 
 @Entity
-@Table(name="product_listing")
-public class ProductListing {
-	
+@Table(name="order_item")
+public class OrderItem {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long product_id;
+	private long order_id;
 	
 	@Column(name = "product_name")
 	@JsonView(View.Base.class)
@@ -35,40 +37,68 @@ public class ProductListing {
 	@JsonView(View.Base.class)
 	private int productQuantity;
 	
-	public long getProduct_id() {
-		return product_id;
+	@Column(name ="status")
+	@JsonView(View.Base.class)
+	private String status;
+	
+	@ManyToOne
+	@JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
+	private User user;
+
+	public long getOrder_id() {
+		return order_id;
 	}
-	public void setProduct_id(long product_id) {
-		this.product_id = product_id;  
+
+	public void setOrder_id(long order_id) {
+		this.order_id = order_id;
 	}
+
 	public String getProductName() {
 		return productName;
 	}
+
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
 	public String getCategoryName() {
 		return categoryName;
 	}
+
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
 	public double getProductPrice() {
 		return productPrice;
 	}
+
 	public void setProductPrice(double productPrice) {
 		this.productPrice = productPrice;
 	}
+
 	public int getProductQuantity() {
 		return productQuantity;
 	}
+
 	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
 	}
-	
-	
-	
-	
-	
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
 }

@@ -33,6 +33,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User saveUser(User user) {
+		UserInfo.setUserId(user.getUser_id());// id user
+		System.out.print(user.getUser_id());
 	
 		//Password Confirmation
 		String pattern= "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,16}$";
@@ -135,8 +137,6 @@ public class UserServiceImpl implements UserService{
 		String passInDb = userRepository.getUserByPassword(email);
 		boolean decodedPass = passwordEncoder.matches(password,passInDb);
 		String mesg = null;
-		System.out.println("passDb "+passInDb);
-		System.out.println("Value " + decodedPass);
 		
 		if(passInDb != null) {
 			if(decodedPass == true) {
@@ -148,7 +148,6 @@ public class UserServiceImpl implements UserService{
 		else{
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your Email is Empty or Incorrect");
 		}
-		System.out.println(mesg);
 		return mesg;
 	}
 

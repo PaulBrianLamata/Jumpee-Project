@@ -26,8 +26,9 @@ public class AccountWallet {
 
 	
 	 @ManyToOne
-	 @JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
+	 @JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	 private User user;
+	 
 	public long getUser_account_wallet_id() {
 		return user_account_wallet_id;
 	}

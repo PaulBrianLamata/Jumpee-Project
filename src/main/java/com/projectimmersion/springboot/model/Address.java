@@ -33,7 +33,7 @@ public class Address {
 	 String contactNumber;
 	 
 	 @ManyToOne
-	 @JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
+	 @JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	 private User user;
 
 	

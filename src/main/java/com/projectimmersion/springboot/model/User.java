@@ -1,15 +1,10 @@
 package com.projectimmersion.springboot.model;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -26,6 +21,7 @@ public class User {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(View.Base.class)
 	private long user_id;
 	
 	@Column(unique = true)
@@ -76,17 +72,6 @@ public class User {
 	@Column(name = "reset_token", nullable = true)
 	private String resetToken;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
-	private List<Address> address;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
-	private List<AccountWallet> accountWallet;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
-	private List<OrderItem> orderItems;
 	
 	public String getResetToken() {
 		return resetToken;
@@ -161,29 +146,6 @@ public class User {
 		this.status = status;
 	}
 
-	public List<Address> getAddress() {
-		return address;
-	}
-
-	public void setAddress(List<Address> address) {
-		this.address = address;
-	}
-
-	public List<AccountWallet> getAccountWallet() {
-		return accountWallet;
-	}
-
-	public void setAccountWallet(List<AccountWallet> accountWallet) {
-		this.accountWallet = accountWallet;
-	}
-
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
-	}
 
 	// End of Getters and Setter
 

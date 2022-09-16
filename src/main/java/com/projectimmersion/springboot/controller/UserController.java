@@ -86,8 +86,10 @@ public class UserController {
 				public ResponseEntity<Message> login(@RequestBody User user){
 				String isSuccess = userService.userEmailPassword(user.getEmail(), user.getPassword());
 				
+				
 				if(isSuccess.equals("Success")) {
 					UserInfo.setEmail(user.getEmail());//email user
+					
 					return ResponseEntity.ok().body(new Message("Message: Welcome User"));
 						}else {
 					return ResponseEntity.badRequest().body(new Message("Error: Wrong Username or password"));

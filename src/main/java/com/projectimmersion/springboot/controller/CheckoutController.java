@@ -9,29 +9,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.projectimmersion.springboot.model.OrderItem;
-import com.projectimmersion.springboot.service.OrderItemService;
+import com.projectimmersion.springboot.model.Checkout;
+import com.projectimmersion.springboot.service.CheckoutService;
 import com.projectimmersion.springboot.view.View;
 
 @RestController
-@RequestMapping(value = "/api/neworder")
-public class OrderItemController {
+@RequestMapping(value = "/api/checkout")
+public class CheckoutController {
 	
+
 	@Autowired
-	private OrderItemService orderItemService;
+	private CheckoutService checkoutService;
 	
-	public OrderItemController(OrderItemService orderItemService) {
+	public CheckoutController(CheckoutService checkoutService) {
 		super();
-		this.orderItemService = orderItemService;
+		this.checkoutService = checkoutService;
 		}
 	
 	@PostMapping()
 	@JsonView(View.Base.class)
-	public ResponseEntity<OrderItem> addOrderItem(@RequestBody OrderItem orderItem){	
+	public ResponseEntity<Checkout> checkoutItem(@RequestBody Checkout checkout){	
 		
-		return new ResponseEntity<OrderItem>(orderItemService.addOrderItem(orderItem), HttpStatus.CREATED);
+		return new ResponseEntity<Checkout>(checkoutService.addCheckout(checkout), HttpStatus.CREATED);
 	}
-	
-	
-
 }

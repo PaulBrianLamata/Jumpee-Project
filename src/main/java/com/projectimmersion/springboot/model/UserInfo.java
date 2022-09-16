@@ -2,12 +2,12 @@ package com.projectimmersion.springboot.model;
 
 public class UserInfo {
 
-	public static int userId;
+	public static Long userId;
 	public static String email;
-	public static int getUserId() {
+	public static Long getUserId() {
 		return userId;
 	}
-	public static void setUserId(int userId) {
+	public static void setUserId(Long userId) {
 		UserInfo.userId = userId;
 	}
 	public static String getEmail() {

@@ -29,9 +29,9 @@ public class OrderItem {
 	@JsonView(View.Base.class)
 	private String categoryName;
 	
-	@Column(name = "product_price")
+	@Column(name = "total_price")
 	@JsonView(View.Base.class)
-	private double productPrice;
+	private double totalPrice;
 	
 	@Column(name ="product_quantity")
 	@JsonView(View.Base.class)
@@ -42,7 +42,7 @@ public class OrderItem {
 	private String status;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_user_id", referencedColumnName = "user_id")
+	@JoinColumn(name = "user_id", referencedColumnName = "user_id")
 	private User user;
 
 	public long getOrder_id() {
@@ -69,12 +69,13 @@ public class OrderItem {
 		this.categoryName = categoryName;
 	}
 
-	public double getProductPrice() {
-		return productPrice;
+
+	public double getTotalPrice() {
+		return totalPrice;
 	}
 
-	public void setProductPrice(double productPrice) {
-		this.productPrice = productPrice;
+	public void setTotalPrice(double totalPrice) {
+		this.totalPrice = totalPrice;
 	}
 
 	public int getProductQuantity() {

@@ -6,4 +6,6 @@ import com.projectimmersion.springboot.model.OrderItem;
 
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
+	OrderItem findByProductName(String productName);
+	
 }

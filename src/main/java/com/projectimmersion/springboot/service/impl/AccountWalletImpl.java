@@ -16,8 +16,6 @@ public class AccountWalletImpl implements AccountWalletService {
 
 	private AccountWalletRepository accountWalletRepository;
 	private UserRepository userRepository;
-	
-	
 
 	
 	public AccountWalletImpl(AccountWalletRepository accountWalletRepository, UserRepository userRepository) {

@@ -65,10 +65,4 @@ public class ProductListing {
 	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
 	}
-	
-	
-	
-	
-	
-
 }

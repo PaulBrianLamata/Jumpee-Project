@@ -32,14 +32,14 @@ public class PasswordResetController {
 	@PostMapping()
 	public ResponseEntity<String> save(@RequestBody User user){
 	String findUser = userService.getUserEmail(user.getEmail());
-	return new ResponseEntity<String>("Passcode : " + findUser, HttpStatus.OK);
+	return new ResponseEntity<String>("Passcode : " + findUser, HttpStatus.ACCEPTED);
 	}
 	
 	
 	@PutMapping("reset/{user_id}")
 	public ResponseEntity<User> updateResetToken(@PathVariable("user_id") long user_id
 			  ,@RequestBody User user){
-return new ResponseEntity<User>(userService.updateUserResetToken(user, user_id), HttpStatus.OK);
+return new ResponseEntity<User>(userService.updateUserResetToken(user, user_id), HttpStatus.ACCEPTED);
 
 	}
 	
@@ -49,7 +49,7 @@ return new ResponseEntity<User>(userService.updateUserResetToken(user, user_id),
 												 @PathVariable("email") String email
 												 ,@RequestBody User user){
 //		userService.updateUserResetPassword(user,email,reset_token);
-		return new ResponseEntity<User>(userService.updateUserResetPassword(user,email,reset_token), HttpStatus.OK);
+		return new ResponseEntity<User>(userService.updateUserResetPassword(user,email,reset_token), HttpStatus.ACCEPTED);
 	}
 	
 }

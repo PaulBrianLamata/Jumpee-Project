@@ -39,7 +39,7 @@ public class AccountWalletController {
 	@JsonView(View.Base.class)
 	public ResponseEntity<AccountWallet> updateUserAddress(@PathVariable("id") long id
 												  ,@RequestBody AccountWallet accountWallet){
-		return new ResponseEntity<AccountWallet>(accountWalletService.updateUserBalance(accountWallet, id), HttpStatus.OK);
+		return new ResponseEntity<AccountWallet>(accountWalletService.updateUserBalance(accountWallet, id), HttpStatus.ACCEPTED);
 	}
 
 }

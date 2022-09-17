@@ -56,7 +56,7 @@ public class UserController {
 		@GetMapping("{user_id}")
 		@JsonView(View.Base.class)
 		public ResponseEntity<User> getUserById(@PathVariable("user_id") long user_id){
-			return new ResponseEntity<User>(userService.getUserById(user_id), HttpStatus.OK);
+			return new ResponseEntity<User>(userService.getUserById(user_id), HttpStatus.ACCEPTED);
 		}
 		
 		// build delete User REST API
@@ -67,7 +67,7 @@ public class UserController {
 			// delete User from DB
 			userService.deleteUser(user_id);
 			
-			return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
+			return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.ACCEPTED);
 		}
 		
 		// build update user REST API
@@ -76,21 +76,18 @@ public class UserController {
 		@JsonView(View.Base.class)
 		public ResponseEntity<User> updateUser(@PathVariable("user_id") long user_id
 													  ,@RequestBody User user){
-			return new ResponseEntity<User>(userService.updateUser(user, user_id), HttpStatus.OK);
+			return new ResponseEntity<User>(userService.updateUser(user, user_id), HttpStatus.ACCEPTED);
 		}
 		
 		//build login user REST API
 		// build get User by id REST API
 				@PostMapping("/login")
-
 				public ResponseEntity<Message> login(@RequestBody User user){
 				String isSuccess = userService.userEmailPassword(user.getEmail(), user.getPassword());
-				
-				
 				if(isSuccess.equals("Success")) {
 					UserInfo.setEmail(user.getEmail());//email user
 					
-					return ResponseEntity.ok().body(new Message("Message: Welcome User"));
+					return ResponseEntity.accepted().body(new Message("Message: Welcome User"));
 						}else {
 					return ResponseEntity.badRequest().body(new Message("Error: Wrong Username or password"));
 				}

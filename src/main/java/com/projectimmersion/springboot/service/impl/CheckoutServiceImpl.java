@@ -51,24 +51,43 @@ public class CheckoutServiceImpl implements CheckoutService {
 			AccountWallet existAccountWallet = accountWalletRepository.getById(getid);
 			ProductListing existProductInfo = productListingRepository.findByProductName(checkout.getProductName());
 			OrderItem existOrderItemInfo = orderItemRepository.findByProductName(checkout.getProductName());
-			Double newBalance = newBalance(existAccountWallet.getBalance(), existOrderItemInfo.getTotalPrice());
-			existAccountWallet.setBalance(newBalance);
-			newCheckout.setUser(existEmail);
-			newCheckout.setOrderItem(existOrderItemInfo);
-			newCheckout.setProductListing(existProductInfo);
-			newCheckout.setCategoryName(existOrderItemInfo.getCategoryName());
-			newCheckout.setProductName(checkout.getProductName());
-			newCheckout.setProductQuantity(existOrderItemInfo.getProductQuantity());
-			newCheckout.setTotalPrice(existOrderItemInfo.getTotalPrice());
-			newCheckout.setStatus("PAID");
-			existOrderItemInfo.setStatus("PAID");
-			return checkoutRepository.save(newCheckout);
+			Double totalPrice = existOrderItemInfo.getTotalPrice();
+			Double accountBalanceDouble = existAccountWallet.getBalance();
+			Double newBalance = newBalance(accountBalanceDouble, totalPrice);
+
+			int getProductQuantity = existOrderItemInfo.getProductQuantity();
+			int existProductQuantity = existProductInfo.getProductQuantity();
+			int newQuantity = newQuantity(existProductQuantity, getProductQuantity);
+			
+			if(totalPrice > accountBalanceDouble) {
+				throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Insufficient Balance");
+			}
+			else {
+				existAccountWallet.setBalance(newBalance);
+				newCheckout.setUser(existEmail);
+				newCheckout.setOrderItem(existOrderItemInfo);
+				newCheckout.setProductListing(existProductInfo);
+				newCheckout.setCategoryName(existOrderItemInfo.getCategoryName());
+				newCheckout.setProductName(checkout.getProductName());
+				newCheckout.setProductQuantity(existOrderItemInfo.getProductQuantity());
+				newCheckout.setTotalPrice(existOrderItemInfo.getTotalPrice());
+				newCheckout.setStatus("PAID");
+				existOrderItemInfo.setStatus("PAID");
+				existProductInfo.setProductQuantity(newQuantity);
+				return checkoutRepository.save(newCheckout);
+			}
+			
 		}
 		
 	}
 	
 	public double newBalance(double balance,double totalPrice) {
 		return balance - totalPrice;
+		
+	}
+	
+	public int newQuantity(int quantity, int newQuantity) {
+		return quantity - newQuantity;
 		
 	}
 }

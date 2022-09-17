@@ -40,13 +40,13 @@ public class AddressController {
 	public ResponseEntity<String> deleteUserAddress(@PathVariable("id") long id){
 		// delete User from DB
 		addressService.deleteUserAddress(id);
-		return new ResponseEntity<String>("Address deleted successfully!.", HttpStatus.OK);
+		return new ResponseEntity<String>("Address deleted successfully!.", HttpStatus.ACCEPTED);
 	}
 	
 	@PutMapping("update/{id}")
 	@JsonView(View.Base.class)
 	public ResponseEntity<Address> updateUserAddress(@PathVariable("id") long id
 												  ,@RequestBody Address address){
-		return new ResponseEntity<Address>(addressService.updateUserAddress(address, id), HttpStatus.OK);
+		return new ResponseEntity<Address>(addressService.updateUserAddress(address, id), HttpStatus.ACCEPTED);
 	}
 }

@@ -33,8 +33,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User saveUser(User user) {
-		UserInfo.setUserId(user.getUser_id());// id user
-		System.out.print(user.getUser_id());
 	
 		//Password Confirmation
 		String pattern= "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,16}$";
@@ -115,7 +113,6 @@ public class UserServiceImpl implements UserService{
 			existingUser.setContactNumber(user.getContactNumber());
 			existingUser.setFirstName(user.getFirstName());
 			existingUser.setLastName(user.getLastName());
-			existingUser.setStatus(user.getStatus());
 			String pattern= "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,16}$";
 			String matcher= user.getPassword();
 			boolean matchFound = matcher.matches(pattern);
@@ -137,7 +134,6 @@ public class UserServiceImpl implements UserService{
 		String passInDb = userRepository.getUserByPassword(email);
 		boolean decodedPass = passwordEncoder.matches(password,passInDb);
 		String mesg = null;
-		
 		if(passInDb != null) {
 			if(decodedPass == true) {
 				mesg = "Success";
@@ -153,12 +149,9 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String getUserEmail(String email) {
-		// TODO Auto-generated method stub
+		
 		User getUserByEmail = userRepository.findByEmail(email);
 		String userEmail = getUserByEmail.getEmail();
-	
-		long getid = getUserByEmail.getUser_id();
-		System.out.println("Id: " + getid);
 		
 		Random rnd = new Random();
 		int code = rnd.nextInt(999999);
@@ -168,10 +161,8 @@ public class UserServiceImpl implements UserService{
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Your Email is Empty or Incorrect");
 		}
 		else {
-			 System.out.println("Email: " + userEmail);
-			 System.out.print("code : " + codeConverted);
+			return codeConverted;
 		}
-		return codeConverted;
 	}
 	
 	
@@ -187,10 +178,13 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User updateUserResetPassword(User user, String email, String token) {	
-		User u = userRepository.getUserByEmailObj(email);
+		User existUser = userRepository.getUserByEmailObj(email);
+		
+		//Method to get the token in db 
 		String userTokenInDB = this.userToken(email);
-		String userToker = token;
-		if(!userToker.equals(userTokenInDB)) {
+		String userToken = token;
+		
+		if(!userToken.equals(userTokenInDB)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Code");
 		}
 		else {
@@ -205,18 +199,16 @@ public class UserServiceImpl implements UserService{
 				
 				if(user.getPassword().equals(user.getConfirmPassword())) {
 					String encodedPassword = this.passwordEncoder.encode(user.getPassword());
-					u.setPassword(encodedPassword);
+					existUser.setPassword(encodedPassword);
 					String encodedConfirmPassword = this.passwordEncoder.encode(user.getConfirmPassword());
-					u.setConfirmPassword(encodedConfirmPassword);
-					System.out.println("Password User::" + user.getPassword());
-					System.out.println("Confirm Password User::" + user.getConfirmPassword());
+					existUser.setConfirmPassword(encodedConfirmPassword);
 				}
 				else {
 					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords don't match");
 					}
 
 			}
-			  return userRepository.save(u);
+			  return userRepository.save(existUser);
 		}
 	}
 	

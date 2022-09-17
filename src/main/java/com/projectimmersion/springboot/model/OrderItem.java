@@ -39,7 +39,7 @@ public class OrderItem {
 	
 	@Column(name ="status")
 	@JsonView(View.Base.class)
-	private String status;
+	private String status; 
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "user_id")

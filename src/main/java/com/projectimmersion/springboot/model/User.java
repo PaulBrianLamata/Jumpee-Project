@@ -66,9 +66,6 @@ public class User {
 	@JsonView(View.Base.class)
 	private String confirmPassword;
 	
-	@Column(name = "status")
-	private String status;
-	
 	@Column(name = "reset_token", nullable = true)
 	private String resetToken;
 	
@@ -137,15 +134,6 @@ public class User {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
 
 	// End of Getters and Setter
 
